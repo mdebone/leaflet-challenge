@@ -7,10 +7,12 @@ d3.json(queryUrl).then(function (data) {
   createFeatures(data.features);
 });
 
+
+
 function createFeatures(earthquakeData) {
 
   // Define a function that we want to run once for each feature in the features array.
-  // Give each feature a popup that describes the place and time of the earthquake.
+  // Give each feature a popup that describes the magnitude & place, as well as the time in a subheader time of the earthquake.
   function onEachFeature(feature, layer) {
     layer.bindPopup(`<h3>Magnitude:${feature.properties.mag}</h3><h3>${feature.properties.place}</h3><hr><p>${new Date(feature.properties.time)}</p>`);
   }
@@ -42,9 +44,14 @@ function createMap(earthquakes) {
     "Topographic Map": topo
   };
 
+  var layers = {
+    M
+  }
+
   // Create an overlay object to hold our overlay.
   var overlayMaps = {
     Earthquakes: earthquakes
+  //  "Plate Boundaries": plateBoundaries
   };
 
   // Create our map, giving it the streetmap and earthquakes layers to display on load.
@@ -64,3 +71,38 @@ function createMap(earthquakes) {
   }).addTo(myMap);
 
 }
+
+// // Store the tectonic API endpoint as a queryUrl.
+// var plateBoundUrl = "https://github.com/fraxen/tectonicplates/blob/master/GeoJSON/PB2002_boundaries.json";
+
+// d3.json(plateBoundUrl).then(function (data) {
+//   createPlateFeatures(data.features);
+// });
+
+// // Use d3 to get the tectonic plate geoJson Data.
+// function createPlateFeatures(plateData) {
+//   L.geoJSon(plateData,
+//     style, {color: "#800000", weight: 4},
+//     ).addTo(plateBoundaries);
+// };
+
+// // Add the plate boundaries to the map
+// plateBoundaries.addTo(map);
+
+
+// // Store the orogenic API endpoint as a queryUrl.
+// var orogeniesUrl = "https://github.com/fraxen/tectonicplates/blob/master/GeoJSON/PB2002_orogens.json";
+
+// d3.json(orogeniesUrl).then(function (data) {
+//   createFeatures(data.features);
+//   });
+
+// // Use d3 to get the orogenic zone geoJson Data.
+// function createFeatures(orogeniesData) {
+//   L.geoJson(orogeniesData,
+//     style, {color: "#800000", weight: 4},
+//     ).addTo(orogeniesBoundaries);
+//   };
+
+// // Add the plate boundaries to the map
+// orogeniesBoundaries.addTo(map);
