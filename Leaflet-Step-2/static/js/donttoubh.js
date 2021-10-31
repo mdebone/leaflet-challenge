@@ -72,37 +72,37 @@ function createMap(earthquakes) {
 
 }
 
-// // Store the tectonic API endpoint as a queryUrl.
-// var plateBoundUrl = "https://github.com/fraxen/tectonicplates/blob/master/GeoJSON/PB2002_boundaries.json";
+// Store the tectonic API endpoint as a queryUrl.
+var plateBoundUrl = "https://github.com/fraxen/tectonicplates/blob/master/GeoJSON/PB2002_boundaries.json";
 
-// d3.json(plateBoundUrl).then(function (data) {
-//   createPlateFeatures(data.features);
-// });
+d3.json(plateBoundUrl).then(function (data) {
+  createPlateFeatures(data.features);
+});
 
-// // Use d3 to get the tectonic plate geoJson Data.
-// function createPlateFeatures(plateData) {
-//   L.geoJSon(plateData,
-//     style, {color: "#800000", weight: 4},
-//     ).addTo(plateBoundaries);
-// };
+// Use d3 to get the tectonic plate geoJson Data.
+function createPlateFeatures(plateData) {
+  L.geoJSon(plateData,
+    style, {color: "#800000", weight: 4},
+    ).addTo(plateBoundaries);
+};
 
-// // Add the plate boundaries to the map
-// plateBoundaries.addTo(map);
+// Add the plate boundaries to the map
+plateBoundaries.addTo(map);
 
 
-// // Store the orogenic API endpoint as a queryUrl.
-// var orogeniesUrl = "https://github.com/fraxen/tectonicplates/blob/master/GeoJSON/PB2002_orogens.json";
+// Store the orogenic API endpoint as a queryUrl.
+var orogeniesUrl = "https://github.com/fraxen/tectonicplates/blob/master/GeoJSON/PB2002_orogens.json";
 
-// d3.json(orogeniesUrl).then(function (data) {
-//   createFeatures(data.features);
-//   });
+d3.json(orogeniesUrl).then(function (data) {
+  createFeatures(data.features);
+  });
 
-// // Use d3 to get the orogenic zone geoJson Data.
-// function createFeatures(orogeniesData) {
-//   L.geoJson(orogeniesData,
-//     style, {color: "#800000", weight: 4},
-//     ).addTo(orogeniesBoundaries);
-//   };
+// Use d3 to get the orogenic zone geoJson Data.
+function createFeatures(orogeniesData) {
+  L.geoJson(orogeniesData,
+    style, {color: "#800000", weight: 4},
+    ).addTo(orogeniesBoundaries);
+  };
 
-// // Add the plate boundaries to the map
-// orogeniesBoundaries.addTo(map);
+// Add the plate boundaries to the map
+orogeniesBoundaries.addTo(map);
