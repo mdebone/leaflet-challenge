@@ -1,21 +1,10 @@
-// Creating the map object
-var map = L.map("map", {
-  center: [37.09, -95.71],
-  zoom: 13
-});
-
-// Adding the tile layer
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-}).addTo(myMap);
-
 // Use this link to get the GeoJSON data.
 var queryUrl = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojson";
 
 // Getting our GeoJSON data
-d3.geoJSON(queryUrl, function(data) {
+d3.json(queryUrl).then(function(data) {
   // Creating a GeoJSON layer with the retrieved data
-  createFeatures(data.feature);
+  createFeatures(data.features);
 });
 
 // The function that will determine the color of a earthquake based on the depth category that it belongs to
@@ -29,6 +18,7 @@ function chooseColor(depth) {
     else return "#000000";
 };
 
+console.log("working");
 
 function createFeatures(earthquakeData) {
 
@@ -41,7 +31,7 @@ function createFeatures(earthquakeData) {
     // Create a GeoJSON layer containing the features array on the earthquakeData object
     // Run function once for each needed statistic in the earthquake array
     // Use the point to layer function described in the leaflet documentation
-    var earthquake = L.geoJSON(earthquakeData, {
+    var earthquake = L.geoJson(earthquakeData, {
       pointToLayer: function (feature, latlng) {
         return L.circleMarker(latlng)
       },
@@ -84,15 +74,15 @@ function createMap(earthquake) {
       "Ocean Seabed Map": ocean
     };
 
-    // Create an overlay object to hold our overlay.
-    var overlayMaps = {
+  // Create an overlay object to hold our overlay.
+  var overlayMaps = {
       Earthquakes: earthquake,
       Techtonics: plateBoundaries,
       Orogenies: orogeniesBoundaries
-    };
+  };
 
   // Create our map, giving it the streetmap and earthquake layers to display on load.
-  var map = L.map("map", {
+  var myMap = L.map("map", {
     center: [
       37.09, -95.71
     ],
@@ -123,7 +113,7 @@ legend.onAdd = function(map) {
   for (var i = 0; i < depths.length; i++) {
     div.innerHTML +=
       '<i style="background:' + chooseColor(depth[i] + '"></i> ' +
-      depth[i] + (depth[i + 1] ? '&ndash;' + depth[i + 1] + '<br>' : '+');
+      depth[i] + (depth[i + 1] ? '&ndash;' + depth[i + 1] + '<br>' : '+'));
     }
 
     return div;
@@ -133,13 +123,31 @@ legend.onAdd = function(map) {
   legend.addTo(myMap);
 
   // Filter the JSON data generously provided by Fraxen
+  d3.json("https://raw.githubusercontent.com/fraxen/tectonicplates/master/GeoJSON/PB2002_orogens.json").then(function(orogenData) {
+      // Adding our geoJSON data, along with style information, to the tectonicplates
+      // layer.
+      L.json(orogenData, {
+        fillColor: "#ccccb3",
+        fillOpacity: 0.5
+      }).addTo(orogeniesBoundaries);
 
+      // Then add the tectonicplates layer to the map.
+      orogeniesBoundaries.addTo(myMap);
+  });
+  
+  
+  // Filter the JSON data generously provided by Fraxen
+  d3.json("https://raw.githubusercontent.com/fraxen/tectonicplates/master/GeoJSON/PB2002_boundaries.json").then(function(plateData) {
+      // Adding our geoJSON data, along with style information, to the tectonicplates
+      // layer.
+      L.json(plateData, {
+        color: "#ff9900",
+        weight: 3
+      }).addTo(plateBoundaries);
 
-
-
-
-
-
+      // Then add the tectonicplates layer to the map.
+      plateBoundaries.addTo(myMap);
+  });
 }
 
 
