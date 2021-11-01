@@ -5,15 +5,13 @@ var orogeniesURL = "https://raw.githubusercontent.com/fraxen/tectonicplates/mast
 
 // Create three layerGroups
 var earthquake = L.layerGroup();
-var plateBoundaries = L.layerGroup();
+var plateBoundaries = new L.layerGroup();
 var orogeniesBoundaries = L.layerGroup()
 
 // Create the tile layers
-var satelliteMap = L.tileLayer("https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}", {
-  attribution: "Map data &copy; <a href=\"https://www.openstreetmap.org/\">OpenStreetMap</a> contributors, <a href=\"https://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA</a>, Imagery © <a href=\"https://www.mapbox.com/\">Mapbox</a>",
-  maxZoom: 18,
-  id: "mapbox.satellite",
-  accessToken: "mapbox_api_key"
+// Define streetMap, topoMap, and oceanMap base layers
+var street = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 });
 
 var topo = L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
@@ -27,7 +25,7 @@ var ocean = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Oc
 
 // Create a baseMaps object.
 var baseMaps = {
-    "SatelliteMap": satelliteMap,
+    "Street": street,
     "Topographic Map": topo,
     "Ocean Seabed Map": ocean
 };
@@ -104,6 +102,7 @@ earthquake.addTo(myMap);
 
 // Filter the JSON data generously provided by Fraxen
 d3.json(boundariesUrl, function(data) {
+    console.log(data);
     // Adding our geoJSON data, along with style information, to the tectonic plates layer.
     L.geoJson(data, {
        color: "#ff9900",
@@ -114,7 +113,7 @@ d3.json(boundariesUrl, function(data) {
 });
 
     // Filter the JSON data generously provided by Fraxen
-d3.json(orogeniesURL,function(data) {
+d3.json(orogeniesURL).then(function(data) {
     // Adding our geoJSON data, along with style information, to the tectonicplates layer.
     L.geoJson(data, {
         fillColor: "#ccccb3",
