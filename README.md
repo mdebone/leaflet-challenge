@@ -15,5 +15,23 @@ No subterranian features, no mid-ocean plate boundaries to display, which cause 
 the plate boundaries that was suggested in the assignment description I think it will make it pop. Since Fraxen, the git hub repository owner also had the orogenic zones in the same folder I went with that. Just shows where mountains are forming because they are being
 uplifed by the subducting oceanic plate. So makes for a good visualization on why certain areas inland away from transform faults like the San Andreas have deep earthquakes. So those will be my two additional overlay maps. 
 
-Side note, I know that its supposed to be a live reload whenever its performed but in my first pull, I had a tsunami, only 1 out of 2000 earthquakes, but I didn't save the file so its lost to time. Such is life, tomorrow I just have to get the to overlayMaps working now that I have the json files and shold be done.The geoJSON exercise from day 1 was helpful to a degree, 
-but I could have easily gone down a deadend trying to get that to work, instead I did the reverse of getting the two function for choosing color and radius first and working backwords. Worked pretty well, but well see after the place techtonic layers are loaded tomorrow.
+Side note, I know that its supposed to be a live reload whenever its performed but in my first pull, I had a tsunami, only 1 out of 2000 earthquakes, but I didn't save the file so its lost to time. 
+Such is life, tomorrow I just have to get the to overlayMaps working now that I have the json files and shold be done.The geoJSON exercise from day 1 was helpful to a degree, 
+but I could have easily gone down a deadend trying to get that to work, instead I did the reverse of getting the two function for choosing color and radius first and working backwords. 
+Worked pretty well, but well see after the place techtonic layers are loaded tomorrow.
+
+Met with my tutor and we went over why the first layer was loading but the second and third layers were not working. 
+It was weird, because all three leaflet basemaps would load, but only the earthquakes of the layers would populate, obviously becauses its called in the myMap variable that creates the app, but no luck on either the tectonic plates loading,  or the orogenies loading. 
+I had not really hoped on the orogonies layer loading because it was a feature function rather than a feature like the tectonic plates and the earthquake points, but the techtonic plate lines not loading was disconcerting to say the least.
+Mainly because its literally just a connect the dot of latitude and longitudes and I downloaded the source code of the boundaries json and converted it into a js and thats exactly what it was, latlng A to latlng B to latlng C ad infinitum.
+
+It turned out that my call for the featurelayers was incorrect after leaflet moved from 1.6.0, which we convered last week, to the new 1.7.1, that came out since then.
+Just bad luck that, so I had to go through the process of updating my html to the new version, downloading an sha512 for the first time which was interesting and a cool benefit of knowing how to do that in the future.
+All that was done, and then nothing populated when I opened to the live server. I had the data there from the console logs that I was trying, like 2000 earthquakes but they were not generating on any of the basemaps.
+
+so d3.json(url, function(data) { doesn't work anymore you have to back to the old 'd3.json(url).then(function(data) { for each of the layers. And just like that BLAM, image of earth with appropiately scaled cirles with color denoting the depth appears on screen with the plate boundaries and the orogoenic zones.
+Took me and the tutor an hour and a half to get it to work, and there 50 minute sessions so I was appreciative of him staying until it was solved. All that remains is that there color gauge is fill deep earthquakes as black rather than the
+color that they are supposed to be. That didn't make sense, becuase I left the last range item of depth >=90 km as the catchall open function so it should have been populating them with some dark red, not the on error == black. 
+But it was and still is so I have to figure that out tomorrow when I have the patience to do so, and find out what happend to my leaflet satelite imagery base layer, just dissapeared, but that will be easy to incorporate.
+
+Im gonnna start cleaning the git hub repositories cause ohh boy did I make a bunch of copies each time I got something to work. 
