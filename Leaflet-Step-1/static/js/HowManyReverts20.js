@@ -55,7 +55,7 @@ L.control.layers(baseMaps, overlayMaps, {
 d3.json(queryUrl).then(function(earthquakeData) {
     // get markerSize by multiplying magnitude
     function scaledMarker(magnitude) {
-        return magnitude * 5;
+        return magnitude * 4;
     };  
     // Tis function that will determine the color of a earthquake based on the depth category that it belongs to
     function chooseColor(depth) {
@@ -87,21 +87,21 @@ d3.json(queryUrl).then(function(earthquakeData) {
               radius: scaledMarker(feature.properties.mag),
               color: "#ffffff",
               fillColor: chooseColor(feature.geometry.coordinates[2]),
-              fillOpacity: 0.75,
+              fillOpacity: 1,
               stroke: true,
               weight: 0.75
             }
         ); 
     },
     onEachFeature: function(feature, layer) {
-        layer.bindPopup(`<h3>${feature.properties.place} "Magnitude: "${feature.properties.mag}</h3><hr><p>${new Date(feature.properties.time)}</p>`);
+        layer.bindPopup(`<h3>Location: ${feature.properties.place} Magnitude: ${feature.properties.mag}</h3><hr><p>${new Date(feature.properties.time)}</p>`);
     }  
 }).addTo(earthquake);    
 // add earthquake layer to map
 earthquake.addTo(myMap);      
 
 // Filter the JSON data generously provided by Fraxen
-d3.json(boundariesUrl, function(data) {
+d3.json(boundariesUrl).then(function(data) {
     console.log(data);
     // Adding our geoJSON data, along with style information, to the tectonic plates layer.
     L.geoJson(data, {
@@ -117,7 +117,7 @@ d3.json(orogeniesURL).then(function(data) {
     // Adding our geoJSON data, along with style information, to the tectonicplates layer.
     L.geoJson(data, {
         fillColor: "#ccccb3",
-        fillOpacity: 0.5
+        fillOpacity: 0.4
     }).addTo(orogeniesBoundaries);
     // Then add the tectonicplates layer to the map.
     orogeniesBoundaries.addTo(myMap);
