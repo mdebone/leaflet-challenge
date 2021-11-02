@@ -38,3 +38,7 @@ Im gonnna start cleaning the git hub repositories cause ohh boy did I make a bun
 
 Halfway thru cleaning the github repositories, it was a mess. I added another basemap, a true color earth view that Im calling satellite, redid the topo map's source to esri rather than the open topo map, and added the base map 'world'the base map has features like cities and countries so it acts like a streetmap in that,
 no data was lost. And redid the colors on earthquake features because they were blending too much with the map colors, food for thought, earthtones are called earthtones cause they look like the colors of earth, so don't pick them for indicator colors.
+
+Got the ones that were default colored wrong, I was stupid, I thought that the less then function was working wrong, because I had to go reverse because there are negatives, as sea level is 0, but there are mountains that earthquakes happen in so they are happen above sea level. 
+And I remember Henry saying you either have to include the less than or equal to, only on one of the endpoints, you can only go one direction, from the front of the range or from the endpoint of the range values, so I figured it needed to be inclusive of the earthquakes happening 100s of km 
+below the surface so I needed it there. Makes sense intuitively, earthquakes can't happen in the sky, but I just had an extra set that I didn't need, that was causing the error. Fixed, final push and submit.
