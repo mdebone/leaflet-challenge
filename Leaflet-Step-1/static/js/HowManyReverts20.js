@@ -67,17 +67,17 @@ d3.json(queryUrl).then(function(earthquakeData) {
     function chooseColor(depth) {
       switch(true) {
         case depth < 10: 
-            return "#cc9900";
+            return "#3366ff";
         case depth < 30: 
-            return "#996600";
+            return "#6666ff";
         case depth < 50: 
-            return "#cc3300";
+            return "#9966ff";
         case depth < 70: 
-            return "#993300";
+            return "#cc33ff";
         case depth < 90: 
-            return "#990000";
+            return "#ff00ff";
         case depth <= 90: 
-            return "#800000";
+            return "#cc0099";
         default:
             return "#800000";
       }
@@ -111,7 +111,7 @@ d3.json(boundariesUrl).then(function(data) {
     console.log(data);
     // Adding our geoJSON data, along with style information, to the tectonic plates layer.
     L.geoJson(data, {
-       color: "#ff9900",
+       color: "#ccff33",
        weight: 3
     }).addTo(plateBoundaries);
     // Then add the tectonicplates layer to the map.
@@ -122,7 +122,8 @@ d3.json(boundariesUrl).then(function(data) {
 d3.json(orogeniesURL).then(function(data) {
     // Adding our geoJSON data, along with style information, to the tectonicplates layer.
     L.geoJson(data, {
-        fillColor: "#ccccb3",
+        color: "#e64c4c",
+        fillColor: "#cc0000",
         fillOpacity: 0.4
     }).addTo(orogeniesBoundaries);
     // Then add the tectonicplates layer to the map.
