@@ -10,12 +10,17 @@ var orogeniesBoundaries = L.layerGroup()
 
 // Create the tile layers
 // Define streetMap, topoMap, and oceanMap base layers
-var street = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+var world = Esri_NatGeoWorldMap = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/NatGeo_World_Map/MapServer/tile/{z}/{y}/{x}', {
+	attribution: 'Tiles &copy; Esri &mdash; National Geographic, Esri, DeLorme, NAVTEQ, UNEP-WCMC, USGS, NASA, ESA, METI, NRCAN, GEBCO, NOAA, iPC',
+	maxZoom: 16
 });
 
-var topo = L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+var topo = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}', {
+	attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ, TomTom, Intermap, iPC, USGS, FAO, NPS, NRCAN, GeoBase, Kadaster NL, Ordnance Survey, Esri Japan, METI, Esri China (Hong Kong), and the GIS User Community'
+});
+
+var satellite = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+	attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
 });
 
 var ocean = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Ocean_Basemap/MapServer/tile/{z}/{y}/{x}', {
@@ -25,8 +30,9 @@ var ocean = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Oc
 
 // Create a baseMaps object.
 var baseMaps = {
-    "Street": street,
+    "World Features": world,
     "Topographic Map": topo,
+    "Satellite Map": satellite, 
     "Ocean Seabed Map": ocean
 };
 
@@ -43,7 +49,7 @@ var myMap = L.map("map", {
         37.09, -95.71
     ],
     zoom: 2,
-    layers: [street, earthquake]
+    layers: [world, earthquake]
 });
 
 // Incorporate default baseMaps and overlayMaps
@@ -61,19 +67,19 @@ d3.json(queryUrl).then(function(earthquakeData) {
     function chooseColor(depth) {
       switch(true) {
         case depth < 10: 
-            return "#ccff99";
+            return "#cc9900";
         case depth < 30: 
-            return "#ffff99";
+            return "#996600";
         case depth < 50: 
-            return "#ffcc66";
+            return "#cc3300";
         case depth < 70: 
-            return "#ff9933";
+            return "#993300";
         case depth < 90: 
-            return "#ff3300";
-        case depth <= 90: 
             return "#990000";
+        case depth <= 90: 
+            return "#800000";
         default:
-            return "#000000";
+            return "#800000";
       }
     }    
 

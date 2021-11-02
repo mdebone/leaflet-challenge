@@ -35,3 +35,6 @@ color that they are supposed to be. That didn't make sense, becuase I left the l
 But it was and still is so I have to figure that out tomorrow when I have the patience to do so, and find out what happend to my leaflet satelite imagery base layer, just dissapeared, but that will be easy to incorporate.
 
 Im gonnna start cleaning the git hub repositories cause ohh boy did I make a bunch of copies each time I got something to work. 
+
+Halfway thru cleaning the github repositories, it was a mess. I added another basemap, a true color earth view that Im calling satellite, redid the topo map's source to esri rather than the open topo map, and added the base map 'world'the base map has features like cities and countries so it acts like a streetmap in that,
+no data was lost. And redid the colors on earthquake features because they were blending too much with the map colors, food for thought, earthtones are called earthtones cause they look like the colors of earth, so don't pick them for indicator colors.
