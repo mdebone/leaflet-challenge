@@ -76,10 +76,8 @@ d3.json(queryUrl).then(function(earthquakeData) {
             return "#cc33ff";
         case depth < 90: 
             return "#ff00ff";
-        case depth <= 90: 
-            return "#cc0099";
         default:
-            return "#800000";
+            return "#cc0099";
       }
     }    
 
